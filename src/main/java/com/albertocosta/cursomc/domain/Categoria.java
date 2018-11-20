@@ -1,24 +1,30 @@
 package com.albertocosta.cursomc.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 
 @Entity // Indica que esta classe vai ser uma entidade do JPA
 
-public class Categoria  implements Serializable {
+public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)  //Define a estrategia de geração automatica dos ID das categorias
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Define a estrategia de geração automatica dos ID das
+														// categorias
 	private Integer id;
 	private String nome;
-	
-	
+
+	@ManyToMany(mappedBy="categorias")
+	private List<Produto> produtos = new ArrayList<>();
+
 	public Categoria() {
 		super();
 	}
@@ -28,8 +34,6 @@ public class Categoria  implements Serializable {
 		this.id = id;
 		this.nome = nome;
 	}
-	
-	
 
 	public Integer getId() {
 		return id;
@@ -45,6 +49,14 @@ public class Categoria  implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 
 	@Override
@@ -71,9 +83,5 @@ public class Categoria  implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
 
 }
